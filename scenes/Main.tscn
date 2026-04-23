@@ -1,0 +1,153 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="3"]
+
+; Ground + 6 platforms each need their own shape resource
+[sub_resource type="RectangleShape2D" id="GndShape"]
+size = Vector2(3200.0, 40.0)
+
+[sub_resource type="RectangleShape2D" id="P1Shape"]
+size = Vector2(180.0, 16.0)
+
+[sub_resource type="RectangleShape2D" id="P2Shape"]
+size = Vector2(180.0, 16.0)
+
+[sub_resource type="RectangleShape2D" id="P3Shape"]
+size = Vector2(180.0, 16.0)
+
+[sub_resource type="RectangleShape2D" id="P4Shape"]
+size = Vector2(180.0, 16.0)
+
+[sub_resource type="RectangleShape2D" id="P5Shape"]
+size = Vector2(180.0, 16.0)
+
+[sub_resource type="RectangleShape2D" id="P6Shape"]
+size = Vector2(180.0, 16.0)
+
+; -----------------------------------------------------------------------
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+; ---- Platforms (ground group added at runtime by main.gd) ------------
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1600.0, 700.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground"]
+shape = SubResource("GndShape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Ground"]
+polygon = PackedVector2Array(-1600, -20, 1600, -20, 1600, 20, -1600, 20)
+color = Color(0.38, 0.25, 0.12, 1)
+
+; --- floating platforms (alternating y to add some layout variety) ---
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(280.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1"]
+shape = SubResource("P1Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform1"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(580.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2"]
+shape = SubResource("P2Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform2"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(880.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform3"]
+shape = SubResource("P3Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform3"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+[node name="Platform4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1180.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform4"]
+shape = SubResource("P4Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform4"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+[node name="Platform5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1480.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform5"]
+shape = SubResource("P5Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform5"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+[node name="Platform6" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1780.0, 578.0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform6"]
+shape = SubResource("P6Shape")
+
+[node name="Visual" type="Polygon2D" parent="Platforms/Platform6"]
+polygon = PackedVector2Array(-90, -8, 90, -8, 90, 8, -90, 8)
+color = Color(0.38, 0.25, 0.12, 1)
+
+; ---- Enemies ---------------------------------------------------------
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy1" parent="Enemies" instance=ExtResource("3")]
+position = Vector2(420.0, 658.0)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("3")]
+position = Vector2(720.0, 658.0)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("3")]
+position = Vector2(1020.0, 658.0)
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("3")]
+position = Vector2(1320.0, 658.0)
+
+[node name="Enemy5" parent="Enemies" instance=ExtResource("3")]
+position = Vector2(1620.0, 658.0)
+
+; ---- Player (last so it renders on top) ------------------------------
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(100.0, 658.0)
+
+; ---- HUD (CanvasLayer so it stays fixed to screen) ------------------
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HealthLabel" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 200.0
+offset_bottom = 40.0
+text = "HP: 3"
+theme_override_font_sizes/font_size = 22
